@@ -10,14 +10,9 @@ defmodule Watermark.Strategies.Html do
   @default_opts ["-q", "-g", "--no-background", "--no-images", "--disable-external-links", "--disable-javascript"]
 
   def new(text) when is_binary(text) do
-    {microseconds, results} = :timer.tc(fn ->
-      text
-      |> make_html(output_path: System.tmp_dir!() <> "#{text}.html")
-      |> html_to_pdf(output_path: "#{System.tmp_dir!()}/#{String.replace(text, ~r/\s/, "")}.pdf")
-    end, [])
-
-    Logger.info("Watermark generated in #{microseconds / 1_000_000}s")
-    results
+    text
+    |> make_html(output_path: System.tmp_dir!() <> "#{text}.html")
+    |> html_to_pdf(output_path: "#{System.tmp_dir!()}/#{String.replace(text, ~r/\s/, "")}.pdf")
   end
 
   defp make_html(text, output_path: output_path) when is_binary(text) do

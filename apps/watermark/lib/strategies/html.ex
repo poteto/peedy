@@ -3,15 +3,21 @@ defmodule Watermark.Strategies.Html do
   Create a watermark by using a HTML intermediate step. Allows control of the
   layout via HTML and CSS.
   """
+  require Logger
   @behaviour WatermarkBehaviour
   @wkhtmltopdf_path System.find_executable("wkhtmltopdf")
   @template "apps/watermark/lib/layouts/template.html.eex"
   @default_opts ["-q", "-g", "--no-background", "--no-images", "--disable-external-links", "--disable-javascript"]
 
   def new(text) when is_binary(text) do
-    text
-    |> make_html(output_path: System.tmp_dir!() <> "#{text}.html")
-    |> html_to_pdf(output_path: "#{System.tmp_dir!()}/#{String.replace(text, ~r/\s/, "")}.pdf")
+    {microseconds, results} = :timer.tc(fn ->
+      text
+      |> make_html(output_path: System.tmp_dir!() <> "#{text}.html")
+      |> html_to_pdf(output_path: "#{System.tmp_dir!()}/#{String.replace(text, ~r/\s/, "")}.pdf")
+    end, [])
+
+    Logger.info("Watermark generated in #{microseconds / 1_000_000}s")
+    results
   end
 
   defp make_html(text, output_path: output_path) when is_binary(text) do

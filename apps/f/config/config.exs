@@ -2,8 +2,7 @@
 # and its dependencies with the aid of the Mix.Config module.
 use Mix.Config
 
-# Ignore goon
-config :porcelain, goon_warn_if_missing: false
+config :toniq, redis_url: "redis://localhost:6379/0"
 
 # This configuration is loaded before any dependency and is restricted
 # to this project. If another project depends on this project, this
@@ -13,11 +12,11 @@ config :porcelain, goon_warn_if_missing: false
 
 # You can configure for your application as:
 #
-#     config :stamp, key: :value
+#     config :f, key: :value
 #
 # And access this configuration in your application as:
 #
-#     Application.get_env(:stamp, :key)
+#     Application.get_env(:f, :key)
 #
 # Or configure a 3rd-party app:
 #

@@ -1,3 +1,0 @@
-defmodule Watermark do
-
-end

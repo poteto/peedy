@@ -2,6 +2,15 @@
 # and its dependencies with the aid of the Mix.Config module.
 use Mix.Config
 
+config :watermarker,
+  ecto_repos: [Watermarker.Repo]
+
+config :watermarker, :executables,
+  wkhtmltopdf: System.find_executable("wkhtmltopdf")
+
+# Ignore goon
+config :porcelain, goon_warn_if_missing: false
+
 # This configuration is loaded before any dependency and is restricted
 # to this project. If another project depends on this project, this
 # file won't be loaded nor affect the parent project. For this reason,
@@ -10,11 +19,11 @@ use Mix.Config
 
 # You can configure for your application as:
 #
-#     config :watermark, key: :value
+#     config :watermarker, key: :value
 #
 # And access this configuration in your application as:
 #
-#     Application.get_env(:watermark, :key)
+#     Application.get_env(:watermarker, :key)
 #
 # Or configure a 3rd-party app:
 #
@@ -27,4 +36,4 @@ use Mix.Config
 # Configuration from the imported file will override the ones defined
 # here (which is why it is important to import them last).
 #
-#     import_config "#{Mix.env}.exs"
+import_config "#{Mix.env}.exs"

@@ -1,14 +1,15 @@
-defmodule Watermark.Mixfile do
+defmodule Watermarker.Mixfile do
   use Mix.Project
 
   def project do
-    [app: :watermark,
+    [app: :watermarker,
      version: "0.1.0",
      build_path: "../../_build",
      config_path: "../../config/config.exs",
      deps_path: "../../deps",
      lockfile: "../../mix.lock",
      elixir: "~> 1.3",
+     elixirc_paths: elixirc_paths(Mix.env),
      build_embedded: Mix.env == :prod,
      start_permanent: Mix.env == :prod,
      deps: deps]
@@ -18,8 +19,12 @@ defmodule Watermark.Mixfile do
   #
   # Type "mix help compile.app" for more information
   def application do
-    [applications: [:logger, :porcelain]]
+    [applications: [:logger, :porcelain, :ecto, :postgrex],
+     mod: {Watermarker, []}]
   end
+
+  defp elixirc_paths(:test), do: ["lib", "test/support"]
+  defp elixirc_paths(_),     do: ["lib"]
 
   # Dependencies can be Hex packages:
   #
@@ -36,6 +41,9 @@ defmodule Watermark.Mixfile do
   # Type "mix help deps" for more examples and options
   defp deps do
     [{:porcelain, "~> 2.0"},
-     {:erlguten, github: "hwatkins/erlguten", branch: "master"}]
+     {:ecto, "~> 2.0"},
+     {:postgrex, ">= 0.0.0"},
+     {:erlguten, github: "hwatkins/erlguten", branch: "master"},
+     {:zarex, "~> 0.3"}]
   end
 end

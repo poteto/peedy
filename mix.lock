@@ -1,0 +1,2 @@
+%{"erlguten": {:git, "https://github.com/hwatkins/erlguten.git", "ec248a63d338c91ff4c4923e31388944383ee3e7", [branch: "master"]},
+  "porcelain": {:hex, :porcelain, "2.0.2", "c1d4863de3e391195e36457bb3d7e17ee1bca5a44f1d708bc037c313342f58e9", [:mix], []}}

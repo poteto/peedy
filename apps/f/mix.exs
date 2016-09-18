@@ -18,7 +18,7 @@ defmodule Peedy.F.Mixfile do
   #
   # Type "mix help compile.app" for more information
   def application do
-    [applications: [:logger, :toniq]]
+    [applications: [:logger, :toniq, :watermarker, :stamper]]
   end
 
   # Dependencies can be Hex packages:
@@ -36,6 +36,9 @@ defmodule Peedy.F.Mixfile do
   # Type "mix help deps" for more examples and options
   defp deps do
     [{:toniq, "~> 1.1"},
-     {:exredis, "~> 0.2"}]
+     {:exredis, "~> 0.2"},
+
+     {:watermarker, in_umbrella: true},
+     {:stamper, in_umbrella: true}]
   end
 end

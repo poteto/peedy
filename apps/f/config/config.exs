@@ -3,6 +3,8 @@
 use Mix.Config
 
 config :toniq, redis_url: "redis://localhost:6379/0"
+config :f, ecto_repos: []
+config :f, max_concurrency: 10
 
 # This configuration is loaded before any dependency and is restricted
 # to this project. If another project depends on this project, this

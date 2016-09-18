@@ -1,25 +1,34 @@
-defmodule Watermark.Strategies.Erlguten do
+defmodule Watermarker.Strategies.Erlguten do
   @moduledoc """
   Create a watermark using Erlguten. Needs more work as Erlguten does not handle
   text opacity.
   """
-  @behaviour WatermarkBehaviour
+  alias Watermarker.{Watermark,Repo}
+  @behaviour Watermarker.WatermarkerBehaviour
 
   def new(text) when is_binary(text) do
-    pdf_pid = new_pdf()
-    exported =
-      pdf_pid
-      |> set_pagesize(:a4)
-      |> set_page(1)
-      |> set_font("Helvetica", 60)
-      |> set_text_rendering(:fill)
-      |> set_fill_gray(0.9)
-      |> move_and_show_rot(200, 500, text, 315)
-      |> export()
+    case Repo.get_by(Watermark, input: text) do
+      %Watermark{} = watermark -> watermark
+      nil ->
+        pdf_pid = new_pdf()
+        exported =
+          pdf_pid
+          |> set_pagesize(:a4)
+          |> set_page(1)
+          |> set_font("Helvetica", 60)
+          |> set_text_rendering(:fill)
+          |> set_fill_gray(0.9)
+          |> move_and_show_rot(200, 500, text, 315)
+          |> export()
 
-    output_path = write_file("#{System.tmp_dir!()}/#{String.replace(text, ~r/\s/, "")}.pdf", exported)
-    close_pdf(pdf_pid)
-    output_path
+        output_path = write_file(System.tmp_dir!() <> "#{Zarex.sanitize(text)}.pdf", exported)
+        close_pdf(pdf_pid)
+        output = File.read!(output_path)
+
+        %Watermark{}
+        |> Watermark.changeset(%{input: text, output: output})
+        |> Repo.insert!()
+    end
   end
 
   defp new_pdf, do: :eg_pdf.new()
@@ -59,9 +68,7 @@ defmodule Watermark.Strategies.Erlguten do
   end
 
   defp write_file(path, {content, _}) do
-    {:ok, _} = File.open(path, [:write], fn f ->
-      IO.write(f, content)
-    end)
+    File.write!(path, content)
     path
   end
 

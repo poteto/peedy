@@ -64,8 +64,13 @@ defmodule Stamper do
   defp stamp_document(%Watermark{} = watermark, input_path) do
     output_path = System.tmp_dir!() <> "#{random_string()}.pdf"
     stamp_path = stamp_path(watermark)
-    %Porcelain.Result{err: nil, out: "", status: 0} = Porcelain.exec(@pdftk, [input_path, "multistamp", stamp_path, "output", output_path])
-    output_path
+
+    if File.exists?(input_path) do
+      %Porcelain.Result{err: nil, out: "", status: 0} = Porcelain.exec(@pdftk, [input_path, "multistamp", stamp_path, "output", output_path])
+      output_path
+    else
+      raise "Input at #{input_path} does not exist"
+    end
   end
 
   def __after_compile__(_env, _bytecode) do

@@ -18,12 +18,32 @@ $ mix do deps.get, deps.compile
 $ mix ecto.setup
 ```
 
-## Examples
+## Web Examples
+
+You can use `http://localhost:4000/api/v1/dev/null` as a valid callback_url in absence of a real one.
+
+Upload file(s) with watermark text to:
+
+```
+POST http://localhost:4000/api/v1/documents?watermark=Ricky Bobby&callback_url=xxx
+```
+
+Attach file(s) via `form-data`. Key names are ignored.
+
+To fetch a document by `id`:
+
+```
+GET http://localhost:4000/api/v1/documents/ebf66636-0706-4bf2-afb6-de5bc8f28688
+```
+
+You can enter this into your browser and a file download will automatically be triggered.
+
+## CLI Examples
 
 Start your IEx console with the `Peedy` app:
 
 ```
-$ iex -S mix
+$ iex -S mix phoenix.server
 ```
 
 Generate an ephemeral watermarked document, with the default callback:

@@ -12,7 +12,7 @@ defmodule Watermarker.Watermark do
     timestamps
   end
 
-  def changeset(watermark, params \\ %{}) do
+  def changeset(%Watermarker.Watermark{} = watermark, params \\ %{}) do
     watermark
     |> cast(params, @required_keys)
     |> validate_required(@required_keys)

@@ -1,7 +1,9 @@
 defmodule Watermarker do
+  use Application
+  alias Watermarker.Strategies.{Html,Erlguten}
+
   @after_compile __MODULE__
   @wkhtmltopdf Application.get_env(:watermarker, :executables)[:wkhtmltopdf]
-  use Application
 
   # See http://elixir-lang.org/docs/stable/elixir/Application.html
   # for more information on OTP Applications
@@ -18,6 +20,13 @@ defmodule Watermarker do
     opts = [strategy: :one_for_one, name: Watermarker.Supervisor]
     Supervisor.start_link(children, opts)
   end
+
+  def create(text, strategy: :html) when is_binary(text),
+    do: Html.new(text)
+  def create(text, strategy: :erlguten) when is_binary(text),
+    do: Erlguten.new(text)
+  def create(text),
+    do: create(text, strategy: :html)
 
   def __after_compile__(_env, _bytecode) do
     if is_nil(@wkhtmltopdf), do: raise error_msg("wkhtmltopdf")

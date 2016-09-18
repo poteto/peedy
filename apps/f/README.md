@@ -1,6 +1,6 @@
 # F
 
-**TODO: Add description**
+Peedy main application.
 
 ## Installation
 

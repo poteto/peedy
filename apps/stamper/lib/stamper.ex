@@ -25,30 +25,27 @@ defmodule Stamper do
 
   def stamp_with(%Watermark{id: id} = watermark, input_path: input_path, ephemeral?: true) do
     output_path = stamp_document(watermark, input_path)
+    input = File.read!(input_path)
+    output = File.read!(output_path)
 
     %Document{
-      input: File.read!(input_path),
-      output: File.read!(output_path),
+      input: input,
+      input_hash: Document.calculate_binary_hash(input),
+      output: output,
+      output_hash: Document.calculate_binary_hash(output),
       stamp_id: id,
       ephemeral?: true
     }
   end
   def stamp_with(%Watermark{id: id} = watermark, input_path: input_path, ephemeral?: false) do
-    input = File.read!(input_path)
-    input_hash = Document.calculate_input_hash(input)
+    output_path = stamp_document(watermark, input_path)
 
-    case Repo.get_by(Document, input_hash: input_hash) do
-      %Document{} = document -> document
-      nil ->
-        output =
-          watermark
-          |> stamp_document(input_path)
-          |> File.read!()
-
-        %Document{}
-        |> Document.changeset(%{input: input, output: output, stamp_id: id})
-        |> Repo.insert!()
-    end
+    %Document{}
+    |> Document.changeset(%{
+        input: File.read!(input_path),
+        output: File.read!(output_path),
+        stamp_id: id})
+    |> Repo.insert!()
   end
 
   defp stamp_path(%Watermark{id: id, output: output}) do

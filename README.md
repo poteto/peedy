@@ -20,6 +20,12 @@ $ mix ecto.setup
 
 ## Web Examples
 
+First start the server:
+
+```
+$ mix phoenix.server
+```
+
 You can use `http://localhost:4000/api/v1/dev/null` as a valid callback_url in absence of a real one.
 
 Upload file(s) with watermark text to:

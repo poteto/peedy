@@ -36,7 +36,7 @@ defmodule Watermarker.Strategies.Html do
   end
 
   defp html_to_pdf(html_path, output_path: output_path) do
-    %Porcelain.Result{err: nil, out: "", status: 0} = Porcelain.exec(@wkhtmltopdf, @default_opts ++ [html_path, output_path] )
+    %Porcelain.Result{err: nil, out: "", status: 0} = Porcelain.exec(@wkhtmltopdf, @default_opts ++ [html_path, output_path])
     output_path
   end
 end

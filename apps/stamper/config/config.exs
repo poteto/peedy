@@ -2,6 +2,12 @@
 # and its dependencies with the aid of the Mix.Config module.
 use Mix.Config
 
+config :stamper,
+  ecto_repos: [Stamper.Repo]
+
+config :stamper, :executables,
+  pdftk: System.find_executable("pdftk")
+
 # Ignore goon
 config :porcelain, goon_warn_if_missing: false
 
@@ -13,11 +19,11 @@ config :porcelain, goon_warn_if_missing: false
 
 # You can configure for your application as:
 #
-#     config :stamp, key: :value
+#     config :stamper, key: :value
 #
 # And access this configuration in your application as:
 #
-#     Application.get_env(:stamp, :key)
+#     Application.get_env(:stamper, :key)
 #
 # Or configure a 3rd-party app:
 #
@@ -30,4 +36,4 @@ config :porcelain, goon_warn_if_missing: false
 # Configuration from the imported file will override the ones defined
 # here (which is why it is important to import them last).
 #
-#     import_config "#{Mix.env}.exs"
+import_config "#{Mix.env}.exs"

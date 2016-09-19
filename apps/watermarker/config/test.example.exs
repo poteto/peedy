@@ -7,5 +7,3 @@ config :watermarker, Watermarker.Repo,
   password: "password",
   hostname: "localhost",
   pool: Ecto.Adapters.SQL.Sandbox
-
-config :watermarker, :layout, "#{File.cwd!}/apps/watermarker/lib/layouts/template.html.eex"

@@ -1,7 +1,7 @@
-defmodule Watermarker.Strategies.HtmlTest do
+defmodule Watermarker.Strategies.PdfkitTest do
   use Watermarker.Case
   alias Watermarker.Watermark
-  alias Watermarker.Strategies.Html
+  alias Watermarker.Strategies.Pdfkit
 
   setup do
     jim_bob = %Watermark{input: "Jim Bob", output: <<1, 2, 3>>} |> Repo.insert!()
@@ -10,11 +10,11 @@ defmodule Watermarker.Strategies.HtmlTest do
   end
 
   test "new: when one exists", %{jim_bob: jim_bob} do
-    assert jim_bob == Html.new("Jim Bob")
+    assert jim_bob == Pdfkit.new("Jim Bob")
   end
 
   test "new: when one does not exist" do
-    %Watermark{} = watermark = Html.new("Ricky Bobby")
+    %Watermark{} = watermark = Pdfkit.new("Ricky Bobby")
     assert watermark.input == "Ricky Bobby"
   end
 end

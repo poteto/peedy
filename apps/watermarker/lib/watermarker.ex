@@ -1,9 +1,11 @@
 defmodule Watermarker do
+  require Logger
   use Application
-  alias Watermarker.Strategies.{Html,Erlguten}
+  alias Watermarker.Strategies.{Pdfkit,Erlguten}
 
   @after_compile __MODULE__
-  @wkhtmltopdf Application.get_env(:watermarker, :executables)[:wkhtmltopdf]
+  @nodejs Application.get_env(:watermarker, :executables)[:nodejs]
+  @pdfkit Application.get_env(:watermarker, :executables)[:pdfkit]
 
   # See http://elixir-lang.org/docs/stable/elixir/Application.html
   # for more information on OTP Applications
@@ -21,15 +23,21 @@ defmodule Watermarker do
     Supervisor.start_link(children, opts)
   end
 
-  def create(text, strategy: :html) when is_binary(text),
-    do: Html.new(text)
+  def create(text, strategy: :pdfkit) when is_binary(text),
+    do: Pdfkit.new(text)
   def create(text, strategy: :erlguten) when is_binary(text),
     do: Erlguten.new(text)
-  def create(text),
-    do: create(text, strategy: :html)
+  def create(text) do
+    {microseconds, watermark} = :timer.tc(fn ->
+      create(text, strategy: :pdfkit)
+    end)
+    Logger.info("Watermark for `#{text}` generated in #{microseconds / 1_000}ms")
+    watermark
+  end
 
   def __after_compile__(_env, _bytecode) do
-    if is_nil(@wkhtmltopdf), do: raise error_msg("wkhtmltopdf")
+    if is_nil(@nodejs), do: raise error_msg("nodejs")
+    if is_nil(@pdfkit), do: raise error_msg("pdfkit")
   end
 
   defp error_msg(missing) do

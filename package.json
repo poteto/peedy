@@ -1,0 +1,19 @@
+{
+  "name": "peedy",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": ""
+  },
+  "engines": {
+    "node": "^6.6.0"
+  },
+  "author": "Lauren Tan <arr@sugarpirate.com>",
+  "license": "",
+  "dependencies": {
+    "blob-stream": "^0.1.3",
+    "commander": "^2.9.0",
+    "pdfkit": "^0.8.0"
+  }
+}

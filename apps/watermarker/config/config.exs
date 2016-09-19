@@ -6,7 +6,7 @@ config :watermarker,
   ecto_repos: [Watermarker.Repo]
 
 config :watermarker, :executables,
-  wkhtmltopdf: System.find_executable("wkhtmltopdf")
+  nodejs: System.find_executable("node")
 
 # Ignore goon
 config :porcelain, goon_warn_if_missing: false

@@ -24,28 +24,36 @@ defmodule Stamper do
   end
 
   def stamp_with(%Watermark{id: id} = watermark, input_path: input_path, ephemeral?: true) do
-    output_path = stamp_document(watermark, input_path)
-    input = File.read!(input_path)
-    output = File.read!(output_path)
+    {microseconds, document} = :timer.tc(fn ->
+      output_path = stamp_document(watermark, input_path)
+      input = File.read!(input_path)
+      output = File.read!(output_path)
 
-    %Document{
-      input: input,
-      input_hash: Document.calculate_binary_hash(input),
-      output: output,
-      output_hash: Document.calculate_binary_hash(output),
-      stamp_id: id,
-      ephemeral?: true
-    }
+      %Document{
+        input: input,
+        input_hash: Document.calculate_binary_hash(input),
+        output: output,
+        output_hash: Document.calculate_binary_hash(output),
+        stamp_id: id,
+        ephemeral?: true
+      }
+    end)
+    Logger.info("Stamped #{document.id} in #{microseconds / 1_000}ms")
+    document
   end
   def stamp_with(%Watermark{id: id} = watermark, input_path: input_path, ephemeral?: false) do
-    output_path = stamp_document(watermark, input_path)
+    {microseconds, document} = :timer.tc(fn ->
+      output_path = stamp_document(watermark, input_path)
 
-    %Document{}
-    |> Document.changeset(%{
-        input: File.read!(input_path),
-        output: File.read!(output_path),
-        stamp_id: id})
-    |> Repo.insert!()
+      %Document{}
+      |> Document.changeset(%{
+          input: File.read!(input_path),
+          output: File.read!(output_path),
+          stamp_id: id})
+      |> Repo.insert!()
+    end)
+    Logger.info("Stamped #{document.id} in #{microseconds / 1_000}ms")
+    document
   end
 
   defp stamp_path(%Watermark{id: id, output: output}) do

@@ -4,19 +4,22 @@
 
 Distributed PDF processing.
 
-## Dependencies
-
-These must be installed.
-
-- `pdftk`: https://www.pdflabs.com/tools/pdftk-the-pdf-toolkit/pdftk_server-2.02-mac_osx-10.11-setup.pkg
-- `wkhtmltopdf`: http://download.gna.org/wkhtmltopdf/0.12/0.12.3/wkhtmltox-0.12.3_osx-cocoa-x86-64.pkg
-
 ## Installation
 
 ```
 $ mix do deps.get, deps.compile
 $ mix ecto.setup
+$ npm install
 ```
+
+## Dependencies
+
+These must be installed:
+
+- `pdftk`: https://www.pdflabs.com/tools/pdftk-the-pdf-toolkit/pdftk_server-2.02-mac_osx-10.11-setup.pkg
+- `node`: `^6.6.0`
+
+Watermark PDFs are generated via [PDFKit](http://pdfkit.org/) in a node.js script. Type `node index.js --help` for options.
 
 ## Web Examples
 

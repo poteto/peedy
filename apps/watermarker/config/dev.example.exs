@@ -6,5 +6,3 @@ config :watermarker, Watermarker.Repo,
   username: "username",
   password: "password",
   hostname: "localhost"
-
-config :watermarker, :layout, "#{File.cwd!}/apps/watermarker/lib/layouts/template.html.eex"

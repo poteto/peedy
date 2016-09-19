@@ -20,6 +20,7 @@ defmodule PeedyWeb.Api.V1.DocumentController do
         |> Plug.Conn.send_file(:ok, tmp_path)
       _ ->
         conn
+        |> halt()
         |> put_status(:not_found)
         |> render(ErrorView, "404.json")
     end
@@ -29,16 +30,25 @@ defmodule PeedyWeb.Api.V1.DocumentController do
     params
     |> Map.drop(["watermark", "callback_url"])
     |> Map.values()
-    |> Enum.map(fn %Plug.Upload{filename: filename, path: path} ->
-      Peedy.F.watermark(watermark_text, &(create_callback(&1, filename, callback_url)), input_path: path, ephemeral?: false)
-    end)
+    |> case do
+      [] ->
+        conn
+        |> halt()
+        |> put_status(:bad_request)
+        |> render(ErrorView, "400.json", %{detail: "No files received"})
+      files ->
+        Enum.map(files, fn %Plug.Upload{filename: filename, path: path} ->
+          Peedy.F.watermark(watermark_text, &(create_callback(&1, filename, callback_url)), input_path: path, ephemeral?: false)
+        end)
 
-    send_resp(conn, :ok, "OK")
+        send_resp(conn, :ok, "OK")
+      end
   end
   def create(conn, _) do
     conn
+    |> halt()
     |> put_status(:bad_request)
-    |> render(ErrorView, "400.json")
+    |> render(ErrorView, "400.json", %{detail: "Watermark and/or callback_url are missing"})
   end
 
   defp create_callback(%Document{id: id, output: output}, filename, callback_url) do

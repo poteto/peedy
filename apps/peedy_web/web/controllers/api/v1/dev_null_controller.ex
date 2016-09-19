@@ -7,9 +7,9 @@ defmodule PeedyWeb.Api.V1.DevNullController do
     |> Map.drop(["id"])
     |> Map.values()
     |> Enum.map(fn %Plug.Upload{filename: filename, path: path} ->
-      "[#{id}] #{filename} located at #{path}"
+      "[dev/null] #{id} | `#{filename}` located at #{path}"
     end)
-    |> Enum.map(&Logger.info/1)
+    |> Enum.map(&Logger.debug/1)
 
     send_resp(conn, :ok, "OK")
   end

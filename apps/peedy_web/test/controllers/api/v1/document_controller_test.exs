@@ -35,11 +35,10 @@ defmodule PeedyWeb.Api.V1.DocumentControllerTest do
   end
 
   test "create returns 200" do
-    upload = %Plug.Upload{path: "test/fixtures/images/bill.jpg", filename: "bill.jpg"}
+    upload = %Plug.Upload{content_type: "application/pdf", path: "test/fixtures/images/bill.pdf", filename: "bill.pdf"}
     conn = post(build_conn, "/api/v1/documents?watermark=Ricky%20Bobby&callback_url=lol", file: upload)
 
     assert conn.status == 200
-    assert length(Stamper.Repo.all(Document)) == 1
   end
 
   test "create returns 400 if params are missing" do

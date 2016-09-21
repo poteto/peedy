@@ -4,18 +4,16 @@ defmodule Peedy.FTest do
   alias Watermarker.Watermark
 
   @sample_pdf_path File.cwd! <> "/test/support/samples/pride_and_prejudice.pdf"
+  @stamp_path File.cwd! <> "/test/support/samples/ricky_bobby.pdf"
 
-  defmodule DummyWatermarker do
-    @stamp_path File.cwd! <> "/test/support/samples/ricky_bobby.pdf"
-
-    def create(text) do
-      %Watermark{id: "tmp", input: text, output: File.read!(@stamp_path)}
-    end
+  setup do
+    watermark = %Watermark{id: "tmp", input: "Ricky Bobby", output: File.read!(@stamp_path)}
+    {:ok, %{watermark: watermark}}
   end
 
-  test "perform watermarks a document" do
+  test "perform watermarks a document", %{watermark: watermark} do
     k = fn identity -> identity end
-    document = F.perform(DummyWatermarker, text: "Ricky Bobby", input_path: @sample_pdf_path, ephemeral?: true, callback: k)
+    document = F.perform(watermark: watermark, input_path: @sample_pdf_path, ephemeral?: true, callback: k)
 
     assert document.input_hash  == "8013f8cf9f4d2aa9a496f36a3f1b3d28507e0970"
     assert document.output_hash == "ae48491c17597c8de63a4839eb865f68f4d97ac7"

@@ -57,7 +57,7 @@ defmodule Stamper do
   end
 
   defp stamp_path(%Watermark{id: id, output: output}) do
-    stamp_path = System.tmp_dir!() <> "#{id}.pdf"
+    stamp_path = System.tmp_dir!() <> "#{Zarex.sanitize(id)}.pdf"
     :ok = File.write!(stamp_path, output)
     stamp_path
   end
@@ -70,7 +70,7 @@ defmodule Stamper do
   end
 
   defp stamp_document(%Watermark{} = watermark, input_path) do
-    output_path = System.tmp_dir!() <> "#{random_string()}.pdf"
+    output_path = System.tmp_dir!() <> "#{Zarex.sanitize(random_string())}.pdf"
     stamp_path = stamp_path(watermark)
 
     if File.exists?(input_path) do

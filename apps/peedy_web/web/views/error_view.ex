@@ -1,6 +1,7 @@
 defmodule PeedyWeb.ErrorView do
   use PeedyWeb.Web, :view
 
+  def render(view, assigns)
   def render("400.json", %{detail: detail}) do
     %{title: "Bad request", code: 400, detail: "Bad request"}
     |> Map.merge(%{detail: detail})

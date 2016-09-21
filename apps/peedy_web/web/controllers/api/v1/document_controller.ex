@@ -61,8 +61,8 @@ defmodule PeedyWeb.Api.V1.DocumentController do
   end
 
   defp whitelist_content_type(uploads) when is_list(uploads) do
-    Enum.filter(uploads, fn %Plug.Upload{} = u ->
-      MapSet.member?(@whitelisted_content_types, u.content_type)
+    Enum.filter(uploads, fn %Plug.Upload{content_type: content_type} ->
+      MapSet.member?(@whitelisted_content_types, content_type)
     end)
   end
 end

@@ -3,6 +3,10 @@ defmodule PeedyWeb.CallbackClientTest do
   alias Stamper.{Repo,Document}
   alias PeedyWeb.CallbackClient
 
+  defmodule DummyAdapter do
+    def post(_, _, _), do: :ok
+  end
+
   setup do
     uuid = Ecto.UUID.generate()
     document =
@@ -20,7 +24,7 @@ defmodule PeedyWeb.CallbackClientTest do
   end
 
   test "post returns document", %{uuid: uuid} do
-    %Document{} = document = CallbackClient.post("/foo", %{file: "foo.pdf", id: uuid}, %{})
+    %Document{} = document = CallbackClient.perform(callback_url: "/foo", file: "foo.pdf", id: uuid, headers: %{}, adapter: DummyAdapter)
 
     assert document.id == uuid
   end

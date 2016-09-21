@@ -22,7 +22,7 @@ defmodule PeedyWeb.Mixfile do
   def application do
     [mod: {PeedyWeb, []},
      applications: [:phoenix, :phoenix_pubsub, :cowboy, :logger, :gettext,
-                    :watermarker, :stamper, :plug, :httpoison]]
+                    :watermarker, :stamper, :plug, :httpoison, :toniq]]
   end
 
   # Specifies which paths to compile per environment.
@@ -40,6 +40,8 @@ defmodule PeedyWeb.Mixfile do
      {:plug, "~> 1.2"},
      {:httpoison, "~> 0.9"},
      {:zarex, "~> 0.3"},
+     {:toniq, "~> 1.1"},
+     {:exredis, "~> 0.2"},
 
      {:f, in_umbrella: true},
      {:watermarker, in_umbrella: true},

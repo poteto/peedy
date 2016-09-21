@@ -57,7 +57,7 @@ defmodule PeedyWeb.Api.V1.DocumentController do
   defp create_callback(%Document{id: id, output: output}, filename, callback_url) do
     file_path = System.tmp_dir!() <> Zarex.sanitize(filename)
     File.write!(file_path, output)
-    @callback_client.post(callback_url, %{file: file_path, id: id}, @document_headers)
+    @callback_client.do_callback(callback_url, %{file: file_path, id: id}, @document_headers)
   end
 
   defp whitelist_content_type(uploads) when is_list(uploads) do

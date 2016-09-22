@@ -1,7 +1,5 @@
 # Peedy
 
-![](logo/peedy.png)
-
 Distributed PDF processing.
 
 ## Installation
@@ -58,14 +56,14 @@ $ iex -S mix phoenix.server
 Generate an ephemeral watermarked document, with the default callback:
 
 ```elixir
-iex(1)> Peedy.F.watermark("Ricky Bobby", input_path: "samples/bible.pdf", ephemeral?: true)
+iex(1)> Peedy.F.watermark("Ricky Bobby", input_path: "path/to/my.pdf", ephemeral?: true)
 ```
 
 Generate a persisted watermarked document, with custom callback:
 
 ```elixir
 iex(1)> custom_callback = fn doc -> IO.puts("id is " <> doc.id) end
-iex(2)> Peedy.F.watermark("Ricky Bobby", custom_callback, input_path: "samples/bible.pdf", ephemeral?: false)
+iex(2)> Peedy.F.watermark("Ricky Bobby", custom_callback, input_path: "path/to/my.pdf", ephemeral?: false)
 ```
 
 ## Tests

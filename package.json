@@ -1,7 +1,7 @@
 {
   "name": "peedy",
   "version": "1.0.0",
-  "description": "",
+  "description": "Script to generate a watermark stamp PDF",
   "main": "index.js",
   "scripts": {
     "test": ""

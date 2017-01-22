@@ -8,7 +8,7 @@ use Mix.Config
 # configure all applications here, we prefer to delegate
 # back to each application for organization purposes.
 config :watermarker, :executables,
-  pdfkit: File.cwd!() <> "/index.js"
+  pdfkit: File.cwd!() <> "/node_modules/peedy-stamp/index.js"
 
 import_config "../apps/*/config/config.exs"
 

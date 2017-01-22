@@ -7,7 +7,7 @@ Distributed PDF processing.
 ```
 $ mix do deps.get, deps.compile
 $ mix ecto.setup
-$ npm install
+$ mix peedy.setup
 ```
 
 ## Dependencies

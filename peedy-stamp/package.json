@@ -1,5 +1,5 @@
 {
-  "name": "peedy",
+  "name": "peedy-stamp",
   "version": "1.0.0",
   "description": "Script to generate a watermark stamp PDF",
   "main": "index.js",
@@ -10,7 +10,7 @@
     "node": "^6.6.0"
   },
   "author": "Lauren Tan <arr@sugarpirate.com>",
-  "license": "",
+  "license": "MIT",
   "dependencies": {
     "blob-stream": "^0.1.3",
     "commander": "^2.9.0",

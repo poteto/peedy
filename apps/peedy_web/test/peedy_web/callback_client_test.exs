@@ -8,6 +8,7 @@ defmodule PeedyWeb.CallbackClientTest do
   end
 
   setup do
+    on_exit fn -> Toniq.failed_jobs |> Enum.map(&Toniq.delete/1) end
     uuid = Ecto.UUID.generate()
     document =
       %Document{

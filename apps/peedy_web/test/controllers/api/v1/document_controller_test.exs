@@ -4,6 +4,7 @@ defmodule PeedyWeb.Api.V1.DocumentControllerTest do
   alias Stamper.{Repo,Document}
 
   setup do
+    on_exit fn -> Toniq.failed_jobs |> Enum.map(&Toniq.delete/1) end
     document =
       %Document{
         id: Ecto.UUID.generate(),

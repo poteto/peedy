@@ -8,7 +8,7 @@ defmodule PeedyWeb.Mixfile do
      config_path: "../../config/config.exs",
      deps_path: "../../deps",
      lockfile: "../../mix.lock",
-     elixir: "~> 1.2",
+     elixir: "~> 1.4",
      elixirc_paths: elixirc_paths(Mix.env),
      compilers: [:phoenix, :gettext] ++ Mix.compilers,
      build_embedded: Mix.env == :prod,
@@ -21,8 +21,8 @@ defmodule PeedyWeb.Mixfile do
   # Type `mix help compile.app` for more information.
   def application do
     [mod: {PeedyWeb, []},
-     applications: [:phoenix, :phoenix_pubsub, :cowboy, :logger, :gettext,
-                    :watermarker, :stamper, :plug, :httpoison, :toniq]]
+     extra_applications: [:logger, :watermarker, :stamper, :plug, :httpoison,
+                          :toniq]]
   end
 
   # Specifies which paths to compile per environment.
@@ -33,15 +33,15 @@ defmodule PeedyWeb.Mixfile do
   #
   # Type `mix help deps` for examples and options.
   defp deps do
-    [{:phoenix, "~> 1.2.0"},
-     {:phoenix_pubsub, "~> 1.0"},
-     {:gettext, "~> 0.11"},
-     {:cowboy, "~> 1.0"},
-     {:plug, "~> 1.2"},
-     {:httpoison, "~> 0.9"},
-     {:zarex, "~> 0.3"},
-     {:toniq, "~> 1.1"},
-     {:exredis, "~> 0.2"},
+    [{:phoenix, "~> 1.3.0-rc"},
+     {:phoenix_pubsub, "~> 1.0.1"},
+     {:gettext, "~> 0.13.1"},
+     {:cowboy, "~> 1.1.2"},
+     {:plug, "~> 1.3.5"},
+     {:httpoison, "~> 0.11.2"},
+     {:zarex, "~> 0.3.0"},
+     {:toniq, "~> 1.2.1"},
+     {:exredis, "~> 0.2.0"},
 
      {:f, in_umbrella: true},
      {:watermarker, in_umbrella: true},

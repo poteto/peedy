@@ -8,7 +8,7 @@ defmodule Stamper.Mixfile do
      config_path: "../../config/config.exs",
      deps_path: "../../deps",
      lockfile: "../../mix.lock",
-     elixir: "~> 1.3",
+     elixir: "~> 1.4",
      elixirc_paths: elixirc_paths(Mix.env),
      build_embedded: Mix.env == :prod,
      start_permanent: Mix.env == :prod,
@@ -19,7 +19,7 @@ defmodule Stamper.Mixfile do
   #
   # Type "mix help compile.app" for more information
   def application do
-    [applications: [:logger, :porcelain, :ecto, :postgrex, :watermarker],
+    [extra_applications: [:logger],
      mod: {Stamper, []}]
   end
 
@@ -40,8 +40,8 @@ defmodule Stamper.Mixfile do
   #
   # Type "mix help deps" for more examples and options
   defp deps do
-    [{:porcelain, "~> 2.0"},
-     {:ecto, "~> 2.0"},
+    [{:porcelain, "~> 2.0.3"},
+     {:ecto, "~> 2.1.4"},
      {:postgrex, ">= 0.0.0"},
 
      {:watermarker, in_umbrella: true}]

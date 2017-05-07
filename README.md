@@ -1,6 +1,6 @@
 # Peedy
 
-Distributed PDF processing.
+PDF watermarking microservice.
 
 ## Installation
 

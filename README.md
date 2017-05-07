@@ -36,6 +36,8 @@ Upload file(s) with watermark text to:
 POST http://localhost:4000/api/v1/documents?watermark=Ricky Bobby&callback_url=xxx
 ```
 
+![For example, using Postman](https://i.imgur.com/1aoqKhf.png)
+
 Attach file(s) via `form-data`. Key names are ignored.
 
 To fetch a document by `id`:
@@ -45,6 +47,8 @@ GET http://localhost:4000/api/v1/documents/ebf66636-0706-4bf2-afb6-de5bc8f28688
 ```
 
 You can enter this into your browser and a file download will automatically be triggered.
+
+![Watermarked PDF](https://i.imgur.com/kSGGX5H.png)
 
 ## Tests
 

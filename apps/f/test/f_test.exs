@@ -7,6 +7,7 @@ defmodule Peedy.FTest do
   @stamp_path File.cwd! <> "/test/support/samples/ricky_bobby.pdf"
 
   setup do
+    on_exit fn -> Toniq.failed_jobs |> Enum.map(&Toniq.delete/1) end
     watermark = %Watermark{id: "tmp", input: "Ricky Bobby", output: File.read!(@stamp_path)}
     {:ok, %{watermark: watermark}}
   end

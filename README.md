@@ -7,7 +7,7 @@ PDF watermarking microservice.
 ```
 $ mix do deps.get, deps.compile
 $ mix ecto.setup
-$ mix peedy.setup
+$ yarn install # or npm install
 ```
 
 ## Dependencies
@@ -16,6 +16,7 @@ These must be installed:
 
 - `pdftk`: https://www.pdflabs.com/tools/pdftk-server/
 - `node`: `^6.6.0`
+- `yarn` or `npm`
 
 Watermark PDFs are generated via [PDFKit](http://pdfkit.org/) in a node.js script. Type `node node_modules/peedy-stamp --help` for options.
 

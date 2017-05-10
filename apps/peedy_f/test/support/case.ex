@@ -1,4 +1,4 @@
-defmodule PeedyWeb.Case do
+defmodule PeedyF.Case do
   use ExUnit.CaseTemplate
 
   using do

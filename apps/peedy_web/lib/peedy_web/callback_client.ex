@@ -1,6 +1,6 @@
 defmodule PeedyWeb.CallbackClient do
   use Toniq.Worker, max_concurrency: Application.get_env(:peedy_web, :max_concurrency)
-  alias Stamper.{Repo,Document}
+  alias PeedyF.{Repo,Document}
   @adapter HTTPoison
 
   def do_callback(callback_url, %{file: file, id: id}, headers, adapter \\ @adapter) do

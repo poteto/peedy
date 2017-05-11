@@ -1,6 +1,6 @@
 defmodule PeedyWeb.Api.V1.DocumentController do
   use PeedyWeb.Web, :controller
-  alias Stamper.{Repo,Document}
+  alias PeedyF.{Watermarker, Repo, Document, Queue}
   alias PeedyWeb.ErrorView
 
   @callback_client Application.get_env(:peedy_web, :callback_client)
@@ -14,7 +14,7 @@ defmodule PeedyWeb.Api.V1.DocumentController do
       %Document{id: id, output: output} ->
         filename = "#{id}.pdf"
         tmp_path = System.tmp_dir!() <> filename
-        attachment = File.write!(tmp_path, output)
+        :ok = File.write!(tmp_path, output)
 
         conn
         |> put_resp_header("content-disposition", ~s(attachment; filename="#{filename}"))
@@ -41,7 +41,7 @@ defmodule PeedyWeb.Api.V1.DocumentController do
       files ->
         watermark = Watermarker.create(watermark_text)
         Enum.map(files, fn %Plug.Upload{filename: filename, path: path} ->
-          Peedy.F.watermark_with(watermark, &(create_callback(&1, filename, callback_url)), input_path: path, ephemeral?: false)
+          Queue.watermark_with(watermark, &(create_callback(&1, filename, callback_url)), input_path: path, ephemeral?: false)
         end)
 
         send_resp(conn, :ok, "OK")

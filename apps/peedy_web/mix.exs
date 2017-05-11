@@ -21,8 +21,7 @@ defmodule PeedyWeb.Mixfile do
   # Type `mix help compile.app` for more information.
   def application do
     [mod: {PeedyWeb, []},
-     extra_applications: [:logger, :watermarker, :stamper, :plug, :httpoison,
-                          :toniq]]
+     extra_applications: [:logger]]
   end
 
   # Specifies which paths to compile per environment.
@@ -43,8 +42,6 @@ defmodule PeedyWeb.Mixfile do
      {:toniq, "~> 1.2.1"},
      {:exredis, "~> 0.2.0"},
 
-     {:f, in_umbrella: true},
-     {:watermarker, in_umbrella: true},
-     {:stamper, in_umbrella: true}]
+     {:peedy_f, in_umbrella: true}]
   end
 end

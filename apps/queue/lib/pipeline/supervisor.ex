@@ -1,4 +1,4 @@
-defmodule Queue.Simple.Queue.Supervisor do
+defmodule Queue.Pipeline.Supervisor do
   use Supervisor
 
   def start_link do
@@ -7,7 +7,8 @@ defmodule Queue.Simple.Queue.Supervisor do
 
   def init(:ok) do
     children = [
-      worker(Queue.Simple.Queue, [[], [name: Queue.Simple.Queue]])
+      worker(Queue.Pipeline.Producer, []),
+      supervisor(Queue.Pipeline.Consumer, [])
     ]
 
     supervise(children, strategy: :one_for_one)

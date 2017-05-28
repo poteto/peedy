@@ -1,6 +1,9 @@
 defmodule Queue.Pipeline.Consumer do
   use ConsumerSupervisor
 
+  @min_concurrency Application.get_env(:queue, :concurrency)[:min]
+  @max_concurrency Application.get_env(:queue, :concurrency)[:max]
+
   def start_link do
     ConsumerSupervisor.start_link(__MODULE__, :ok)
   end
@@ -11,7 +14,11 @@ defmodule Queue.Pipeline.Consumer do
     ]
 
     {:ok, children, strategy: :one_for_one, subscribe_to: [
-      {Queue.Pipeline.Producer, max_demand: 10, min_demand: 1}
+      {
+        Queue.Pipeline.Producer,
+        min_demand: @min_concurrency,
+        max_demand: @max_concurrency
+      }
     ]}
   end
 end

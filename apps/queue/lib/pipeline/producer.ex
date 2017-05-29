@@ -13,7 +13,7 @@ defmodule Queue.Pipeline.Producer do
 
   def handle_cast(:check_messages, 0), do: {:noreply, [], 0}
   def handle_cast(:check_messages, state) when is_integer(state) do
-    messages = SimpleQueue.dequeue(state)
+    messages = Queue.dequeue(state)
 
     GenStage.cast(__MODULE__, :check_messages)
 

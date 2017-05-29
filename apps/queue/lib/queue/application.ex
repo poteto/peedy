@@ -1,23 +1,16 @@
 defmodule Queue.Application do
-  # See http://elixir-lang.org/docs/stable/elixir/Application.html
-  # for more information on OTP Applications
   @moduledoc false
-
   use Application
 
   def start(_type, _args) do
     import Supervisor.Spec, warn: false
 
-    # Define workers and child supervisors to be supervised
     children = [
-      worker(Queue.SimpleQueue.Supervisor, []),
-      worker(Queue.Pipeline.Producer, []),
-      worker(Queue.Pipeline.Consumer, [])
+      worker(Queue.Simple.Queue.Supervisor, []),
+      supervisor(Queue.Pipeline.Supervisor, [])
     ]
 
-    # See http://elixir-lang.org/docs/stable/elixir/Supervisor.html
-    # for other strategies and supported options
-    opts = [strategy: :one_for_one, name: Queue.Supervisor]
+    opts = [strategy: :rest_for_one, name: Queue.Supervisor]
     Supervisor.start_link(children, opts)
   end
 end
